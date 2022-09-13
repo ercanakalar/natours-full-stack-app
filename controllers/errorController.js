@@ -37,11 +37,11 @@ const sendErrorDev = (err, req, res) => {
   }
 
   // B) RENDERED WEBSITE
-  // console.error('ERROR 💥', err);
-  // return res.status(err.statusCode).render('error', {
-  //   title: 'Something went wrong!',
-  //   msg: err.message
-  // });
+  console.error('ERROR 💥', err);
+  return res.status(err.statusCode).render('error', {
+    title: 'Something went wrong!',
+    msg: err.message
+  });
 };
 
 const sendErrorProd = (err, req, res) => {
@@ -95,9 +95,9 @@ module.exports = (err, req, res, next) => {
     error.message = err.message;
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
-    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (error.name === 'ValidationError')
-      error = handleValidationErrorDB(error);
+    // if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+    // if (error.name === 'ValidationError')
+    //   error = handleValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
 
